@@ -1,6 +1,7 @@
 # Piper
 *a learning project/fun experiment in internet protocol*
-Version 0.1.1 (SEMVER)
+
+Version 0.2.0 (SEMVER)
 
 ## Goals
 - Piper is Simple. A page is a page. There are no secondary requests for more resources.
@@ -37,7 +38,10 @@ the below table lays out the pre-allocated Content Type field values. Any value 
 |------------|---------|
 | `0x00` | Text (UTF8, no formatting) |
 | `0x01` | Text (UTF8, gemtext) |
-| `0x10` | File - data is raw bytes. Should not be treated as having an encoding. |
+| `0x02` | Text (ASCII) | 
+| `0x10` | File - UTF8 |
+| `0x11` | File - ASCII | 
+| `0x1F` | File - raw bytes, no encoding |
 | `0x20` | Redirect to other Piper URI. URI is supplied in contents. |
 | `0x21` | Redirect to non-Piper URI. URI is supplied in contents |
 | `0x22` | Error - resource not found |
