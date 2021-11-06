@@ -49,7 +49,10 @@ fn handle_request(mut stream: TcpStream){
     //pt.1: content type
     //note that the extensions here are purely for demo purposes. Server impls are free to do what they wish.
     match ext{
+        //text (UTF8)
         "txt" => response.push(0x00),
+        //gemtxt (UTF8)
+        "gmi" => response.push(0x01),
         //a for ascii
         "atxt" => response.push(0x02),
         //redirect -> piper URL
