@@ -2,7 +2,7 @@
 
 _a learning project/fun experiment in internet protocol_
 
-Version 0.3.0 (SEMVER)
+Version 0.4.0 (SEMVER)
 
 ## Goals
 
@@ -13,13 +13,13 @@ Version 0.3.0 (SEMVER)
 
 ## Basic Tech Notes
 
-- Piper uses TCP for data transfer, as TCP is reliable and battletested.
+- Piper uses TCP for data transfer, as TCP is reliable and battle-tested.
 - Piper's default port is port 60
 - Piper is Little Endian. To maintain simplicity, this is spec-defined, and not controllable by the server or the client.
 
 ## Piper Requests
 
-A Piper request is simple. Once a TCP connection with the server has been established, the target URI is then sent. The client then waits for a repsonse. Once a response is recieved, the TCP connection is closed.
+A Piper request is simple. Once a TCP connection with the server has been established, the target URI is then sent. The client then waits for a response. Once a response is received, the TCP connection is closed.
 
 The request structure is detailed below:
 
@@ -30,21 +30,21 @@ The request structure is detailed below:
 
 ## Piper Responses
 
-A response entails slightly more complexity than a request, as it contains first a header datastructure, and then the contents of the response, if they exist.
+A response entails slightly more complexity than a request, as it contains first a header data structure, and then the contents of the response, if they exist.
 
 the below table lays out the fields of the header:
 
 | Num Bytes | Purpose                |
 | --------- | ---------------------- |
-| 1         | Content Type (`u8`)    |
-| 8         | Content Length (`u64`) |
+| 1         | Content-Type (`u8`)    |
+| 8         | Content-Length (`u64`) |
 | Remaining | Content                |
 
-this header design meets the criterion of Piper well. It's static nature (and the lack of any sort of header length field) keeps it Finite, whereas it's small size helps keep it Simple and Small. There are no fields present which would help one evade Piper's promise to keep things Stateless.
+This header design meets the criterion of Piper well. Its static nature (and the lack of any sort of header length field) keeps it Finite, whereas its small size helps keep it Simple and Small. There are no fields present that would help one evade Piper's promise to keep things Stateless.
 
-Everything after the header is assumed to be body content. The Content Length field is present soley to help clients with ease of allocation while reading a response.
+Everything after the header is assumed to be body content. The Content-Length field is present solely to help clients with ease of allocation while reading a response.
 
-the below table lays out the pre-allocated Content Type field values. Any value not present is not part of the specification, and is considered invalid.
+The below table lays out the pre-allocated Content-Type field values. Any value not present is not part of the specification and is considered invalid.
 
 ### Content Type Table
 
