@@ -15,25 +15,50 @@ fn handle_request(mut stream: TcpStream){
     //pull in the bytes
     let mut reader = io::BufReader::new(&mut stream);
     let mut received: Vec<u8> = reader.fill_buf().unwrap().to_vec();
+    let mut response: Vec<u8> = vec![];
     reader.consume(received.len());
     //trim the content len, since we're just working without it/don't care.
     received.remove(0);
     received.remove(0);
-    let mut target_uri = std::str::from_utf8(&*received).unwrap();
+    let mut target_uri = match std::str::from_utf8(&*received).unwrap(){
+        Ok(res) => res,
+        Err(err) => {
+            //decode err = internal server error = 0x23
+            response.push(0x23);
+            response.extend((0 as u64).to_ne_bytes());
+            stream.write_all(&*response);
+            return;
+        }
+    };
     println!("[Info] Request is for URI {}",target_uri);
     //fecth the file locally
     let target_path = format!("srv/{}",target_uri);
     let ext = target_uri.split(".").last().unwrap();
-    let file = fs::read_to_string(target_path).unwrap();
-    let mut response: Vec<u8> = vec![];
-    //write in the header!
+    let file = match fs::read_to_string(target_path) {
+        Ok(file) => file,
+        Err(err) => {
+            //file's missing. send a 0x22
+            response.push(0x22);
+            response.extend((0 as u64).to_ne_bytes());
+            stream.write_all(&*response);
+            return;
+        }
+    };
 
+    //normal execution
     //pt.1: content type
+    //note that the extensions here are purely for demo purposes. Server impls are free to do what they wish.
     match ext{
-        "txt" => {response.push(0x00)}
-        &_ => {response.push(0x10)}
+        "txt" => response.push(0x00),
+        //a for ascii
+        "atxt" => response.push(0x02),
+        //redirect -> piper URL
+        "predir" => response.push(0x20),
+        //redirect -> non piper URL
+        "wredir" => response.push(0x21),
+        &_ => response.push(0x10)
     }
-    response.extend((file.len() as u64).as_ne_bytes());
+    response.extend((file.len() as u64).to_ne_bytes());
     response.extend(file.into_bytes());
     stream.write_all(&*response);
 }
