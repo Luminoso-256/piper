@@ -1,6 +1,6 @@
 # Piper
 *a learning project/fun experiment in internet protocol*
-Version 0.1.0 (SEMBVER)
+Version 0.1.1 (SEMVER)
 
 ## Goals
 - Piper is Simple. A page is a page. There are no secondary requests for more resources.
