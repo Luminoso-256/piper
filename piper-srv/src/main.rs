@@ -3,7 +3,6 @@ piper-srv
 a simple demo server utilizing the piper (piper://) protocol
 the executable will serve files out of a "srv" directory placed adjacent to the executable.
 */
-#![feature(num_as_ne_bytes)]
 use std::{thread,fs,env};
 use std::net::{TcpListener, TcpStream, Shutdown};
 use std::io::{Read, Write,self, BufRead};
@@ -20,7 +19,7 @@ fn handle_request(mut stream: TcpStream){
     //trim the content len, since we're just working without it/don't care.
     received.remove(0);
     received.remove(0);
-    let mut target_uri = match std::str::from_utf8(&*received).unwrap(){
+    let mut target_uri = match std::str::from_utf8(&*received){
         Ok(res) => res,
         Err(err) => {
             //decode err = internal server error = 0x23
@@ -37,6 +36,7 @@ fn handle_request(mut stream: TcpStream){
     let file = match fs::read_to_string(target_path) {
         Ok(file) => file,
         Err(err) => {
+            println!("[Err] File read err: {}",err);
             //file's missing. send a 0x22
             response.push(0x22);
             response.extend((0 as u64).to_ne_bytes());
@@ -44,6 +44,8 @@ fn handle_request(mut stream: TcpStream){
             return;
         }
     };
+
+
 
     //normal execution
     //pt.1: content type
@@ -54,7 +56,7 @@ fn handle_request(mut stream: TcpStream){
         //gemtxt (UTF8)
         "gmi" => response.push(0x01),
         //a for ascii
-        "atxt" => response.push(0x02),
+        "atxt" =>{ response.push(0x02);},
         //redirect -> piper URL
         "predir" => response.push(0x20),
         //redirect -> non piper URL
