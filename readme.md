@@ -2,7 +2,7 @@
 
 _a learning project/fun experiment in internet protocol_
 
-Version 0.4.0 (SEMVER)
+Version 0.5.0 (SEMVER)
 
 ## Goals
 
@@ -60,6 +60,7 @@ The below table lays out the pre-allocated Content-Type field values. Any value 
 | `0x21`     | Redirect to non-Piper URI. URI is supplied in contents    |
 | `0x22`     | Error - resource not found                                |
 | `0x23`     | Error - internal server error                             |
+| `0x24`     | Specification Version - used to avoid unexpected errors on spec changes |
 
 Note that Content Types are laid out in "ranges":
 
