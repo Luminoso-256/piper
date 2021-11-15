@@ -67,3 +67,8 @@ Note that Content Types are laid out in "ranges":
 - `0x0X` is text
 - `0x1X` is file transfer
 - `0x2X` is Status-code like things. (Piper has no formal concept of status codes, as the required functionality can be reimplemented here.)
+
+## Reference Implementations (this and everything below is not part of the spec)
+Server:
+- [petri](https://github.com/luminoso-256/petri)
+
