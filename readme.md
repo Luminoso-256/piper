@@ -2,7 +2,7 @@
 
 _a learning project/fun experiment in internet protocol_
 
-Version 0.6.0 (SEMVER)
+Version 0.7.0 (SEMVER)
 
 ## Goals
 
@@ -20,7 +20,7 @@ Version 0.6.0 (SEMVER)
 ## Piper URLs
 the piper URL formart is laid out below. Parts in brackets can be omitted, but note that this omission may change behavior in some cases.
 ```
-[piper://]example.com[:60]/some_file.txt
+[piper://]hostname[:port][/path[?query[=...]]]
 ```
 
 ## Piper Requests
@@ -49,6 +49,8 @@ the below table lays out the fields of the header:
 This header design meets the criterion of Piper well. Its static nature (and the lack of any sort of header length field) keeps it Finite, whereas its small size helps keep it Simple and Small. There are no fields present that would help one evade Piper's promise to keep things Stateless.
 
 Everything after the header is assumed to be body content. The Content-Length field is present solely to help clients with ease of allocation while reading a response.
+
+Note that Content-Length `2 ** 64-1` ((2 to the power 64) minus 1) is **reserved** for dynamic content (content ends at EOF) for convienence in some circumstances.
 
 The below table lays out the pre-allocated Content-Type field values. Any value not present is not part of the specification and is considered invalid.
 
