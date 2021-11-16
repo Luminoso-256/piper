@@ -2,7 +2,7 @@
 
 _a learning project/fun experiment in internet protocol_
 
-Version 0.5.0 (SEMVER)
+Version 0.6.0 (SEMVER)
 
 ## Goals
 
@@ -16,6 +16,12 @@ Version 0.5.0 (SEMVER)
 - Piper uses TCP for data transfer, as TCP is reliable and battle-tested.
 - Piper's default port is port 60
 - Piper is Little Endian. To maintain simplicity, this is spec-defined, and not controllable by the server or the client.
+
+## Piper URLs
+the piper URL formart is laid out below. Parts in brackets can be omitted, but note that this omission may change behavior in some cases.
+```
+[piper://]example.com[:60]/some_file.txt
+```
 
 ## Piper Requests
 
@@ -53,11 +59,8 @@ The below table lays out the pre-allocated Content-Type field values. Any value 
 | `0x00`     | Text (UTF8, no formatting)                                |
 | `0x01`     | Text (UTF8, gemtext)                                      |
 | `0x02`     | Text (ASCII)                                              |
-| `0x10`     | File - UTF8                                               |
-| `0x11`     | File - ASCII                                              |
-| `0x1F`     | File - raw bytes, no encoding                             |
-| `0x20`     | Redirect to other Piper URI. URI is supplied in contents. |
-| `0x21`     | Redirect to non-Piper URI. URI is supplied in contents    |
+| `0x10`     | File - raw bytes                                          |
+| `0x20`     | Redirect to other Piper page. If the `piper://` component of the URL is present, it is an out-of-site redirect. Otherwise the redirect is relative and considered in-site. |
 | `0x22`     | Error - resource not found                                |
 | `0x23`     | Error - internal server error                             |
 | `0x24`     | Specification Version - used to avoid unexpected errors on spec changes |
@@ -67,6 +70,8 @@ Note that Content Types are laid out in "ranges":
 - `0x0X` is text
 - `0x1X` is file transfer
 - `0x2X` is Status-code like things. (Piper has no formal concept of status codes, as the required functionality can be reimplemented here.)
+
+Also note that the `0xFX` range is **reserved** for client-side utility purposes.
 
 ## Reference Implementations (this and everything below is not part of the spec)
 Server:
