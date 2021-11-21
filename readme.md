@@ -81,3 +81,4 @@ Also note that the `0xFX` range is **reserved** for client-side utility purposes
 - [graze](https://github.com/RandomSoup/graze)
 - [libpiper](https://github.com/RandomSoup/libpiper)
 - [terra](https://github.com/RandomSoup/terra)
+- [weave](https://github.com/Luminoso-256/piper-weave)
