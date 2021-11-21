@@ -75,10 +75,9 @@ Note that Content Types are laid out in "ranges":
 
 Also note that the `0xFX` range is **reserved** for client-side utility purposes.
 
-## Reference Implementations (this and everything below is not part of the spec)
-Server:
+## Reference Implementations & Related Projects (this and everything below is not part of the spec)
 - [petri](https://github.com/luminoso-256/petri)
-
-Client:
 - [pipette](https://github.com/Luminoso-256/pipette)
-
+- [graze](https://github.com/RandomSoup/graze)
+- [libpiper](https://github.com/RandomSoup/libpiper)
+- [terra](https://github.com/RandomSoup/terra)
