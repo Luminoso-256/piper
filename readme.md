@@ -2,7 +2,7 @@
 
 _a learning project/fun experiment in internet protocol_
 
-Version 0.7.0 (SEMVER)
+Version 0.8.0 (SEMVER)
 
 ## Goals
 
@@ -21,6 +21,10 @@ Version 0.7.0 (SEMVER)
 the piper URL formart is laid out below. Parts in brackets can be omitted, but note that this omission may change behavior in some cases.
 ```
 [piper://]hostname[:port][/path[?query[=...]]]
+```
+Additional query parameters can be appended using the & character:
+```
+[piper://]hostname[:port][/path[?queryA[=...]&queryB[=...]]]
 ```
 
 ## Piper Requests
